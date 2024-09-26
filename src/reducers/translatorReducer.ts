@@ -1,6 +1,7 @@
+import { AUTO_LANGUAGE } from '../constants/languages'
 import { TranslatorAction, TranslatorState } from '../definitions/types.d'
 
-export const translatorIntialState: TranslatorState = {
+export const translatorInitialState: TranslatorState = {
   fromLanguage: 'auto',
   toLanguage: 'en',
   fromText: '',
@@ -16,6 +17,7 @@ export function translatorReducer(
 
   switch (type) {
     case 'SWITCH_LANGUAGES':
+      if (state.fromLanguage === AUTO_LANGUAGE) return state
       return {
         ...state,
         fromLanguage: state.toLanguage,

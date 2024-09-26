@@ -1,28 +1,36 @@
 import { useReducer } from 'react'
 
 import {
-  translatorIntialState,
+  translatorInitialState,
   translatorReducer,
 } from '../reducers/translatorReducer'
+import { Language, FromLanguage } from '../definitions/types'
 
 export function useTranslatorReducer() {
-  const [state, dispatch] = useReducer(translatorReducer, translatorIntialState)
+  const [state, dispatch] = useReducer(
+    translatorReducer,
+    translatorInitialState,
+  )
   const { fromLanguage, toLanguage, fromText, translatedText, loading } = state
 
   const switchLanguages = () => {
     dispatch({ type: 'SWITCH_LANGUAGES' })
   }
 
-  const handleFromLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target === null) return
-    const { value } = e.target
-    dispatch({ type: 'SET_FROM_LANGUAGE', payload: value })
+  const setFromLanguage = (payload: FromLanguage) => {
+    dispatch({ type: 'SET_FROM_LANGUAGE', payload })
   }
 
-  const handleToLanguageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target === null) return
-    const { value } = e.target
-    dispatch({ type: 'SET_TO_LANGUAGE', payload: value })
+  const setToLanguage = (payload: Language) => {
+    dispatch({ type: 'SET_TO_LANGUAGE', payload })
+  }
+
+  const setFromText = (payload: Language) => {
+    dispatch({ type: 'SET_FROM_TEXT', payload })
+  }
+
+  const setTranslatedText = (payload: Language) => {
+    dispatch({ type: 'SET_TRANSLATED_TEXT', payload })
   }
 
   return {
@@ -32,7 +40,9 @@ export function useTranslatorReducer() {
     translatedText,
     loading,
     switchLanguages,
-    handleFromLanguageChange,
-    handleToLanguageChange,
+    setFromLanguage,
+    setToLanguage,
+    setFromText,
+    setTranslatedText,
   }
 }

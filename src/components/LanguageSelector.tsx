@@ -1,5 +1,10 @@
-import { Language, FromLanguage } from '@/definitions/types'
-import { SUPPORTED_LANGUAGES } from '../constants/languages'
+import {
+  SectionType,
+  type Language,
+  type FromLanguage,
+  type Props,
+} from '../definitions/types.d'
+import { AUTO_LANGUAGE, SUPPORTED_LANGUAGES } from '../constants/languages'
 
 import {
   Select,
@@ -9,31 +14,27 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-type Props =
-  | {
-      type: 'from'
-      value: FromLanguage
-      onChange: (language: FromLanguage) => void
+export function LanguageSelector({ type, value, onChange }: Props) {
+  const handleChange = (language: string) => {
+    if (type === SectionType.From) {
+      onChange(language as FromLanguage)
+    } else {
+      onChange(language as Language)
     }
-  | { type: 'to'; value: Language; onChange: (language: Language) => void }
-
-export function LanguageSelector({ onChange }: Props) {
-  console.log('onChange')
-
-  const handleChange = (language: FromLanguage | Language) => {
-    console.log(language)
-    onChange(language as Language)
   }
 
   return (
-    <Select onValueChange={handleChange}>
+    <Select onValueChange={handleChange} value={value}>
       <SelectTrigger name="from-language-option-list" className="w-[280px]">
         <SelectValue placeholder="Select a timezone" />
       </SelectTrigger>
       <SelectContent>
+        {type === SectionType.From && (
+          <SelectItem value={AUTO_LANGUAGE}>Detect Language</SelectItem>
+        )}
         {Object.entries(SUPPORTED_LANGUAGES).map(([code, language]) => {
           return (
-            <SelectItem key={code} id={code} value={code}>
+            <SelectItem key={code} value={code}>
               {language}
             </SelectItem>
           )

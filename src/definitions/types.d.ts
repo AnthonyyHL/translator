@@ -18,3 +18,20 @@ export type TranslatorAction =
   | { type: 'SET_TO_LANGUAGE'; payload: Language }
   | { type: 'SET_FROM_TEXT'; payload: string }
   | { type: 'SET_TRANSLATED_TEXT'; payload: string }
+
+export enum SectionType {
+  From = 'from',
+  To = 'to',
+}
+
+export type Props =
+  | {
+      type: SectionType.From
+      value: FromLanguage
+      onChange: (language: FromLanguage) => void
+    }
+  | {
+      type: SectionType.To
+      value: Language
+      onChange: (language: Language) => void
+    }

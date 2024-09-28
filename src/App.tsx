@@ -1,10 +1,14 @@
-// import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Container, Row, Col } from 'react-bootstrap'
+import { LanguageCard } from './components/LanguageCard'
 
 import { useTranslatorReducer } from './hooks/useTranslatorReducer'
 
-import './App.css'
 import { AUTO_LANGUAGE } from './constants/languages'
-import { LanguageSelector } from './components/LanguageSelector'
+import { SectionType } from './definitions/types.d'
+import { SwitchIcon } from './components/icons/SwitchIcon'
+
+import './App.css'
 
 function App() {
   const {
@@ -21,34 +25,36 @@ function App() {
   } = useTranslatorReducer()
 
   return (
-    <>
-      <h1>Translator clone</h1>
-      {/* Test */}
-      <span>fromLanguage {fromLanguage}</span>
-      <LanguageSelector
-        type="from"
-        value={fromLanguage}
-        onChange={setFromLanguage}
-      ></LanguageSelector>
+    <Container className="w-full h-full">
+      <Row className="d-inline-flex justify-center">
+        <h1>Translator clone</h1>
 
-      <br />
+        <Col className="col-auto">
+          <LanguageCard
+            type={SectionType.From}
+            value={fromLanguage}
+            onChange={setFromLanguage}
+          ></LanguageCard>
+        </Col>
 
-      <span>toLanguage {toLanguage}</span>
-      <LanguageSelector
-        type="to"
-        value={toLanguage}
-        onChange={setToLanguage}
-      ></LanguageSelector>
+        <Col className="col-auto">
+          <button
+            disabled={fromLanguage === AUTO_LANGUAGE}
+            onClick={switchLanguages}
+          >
+            <SwitchIcon />
+          </button>
+        </Col>
 
-      <br />
-
-      <button
-        disabled={fromLanguage === AUTO_LANGUAGE}
-        onClick={switchLanguages}
-      >
-        Switch
-      </button>
-    </>
+        <Col className="col-auto">
+          <LanguageCard
+            type={SectionType.To}
+            value={toLanguage}
+            onChange={setToLanguage}
+          ></LanguageCard>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 

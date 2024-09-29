@@ -25,11 +25,11 @@ export function useTranslatorReducer() {
     dispatch({ type: 'SET_TO_LANGUAGE', payload })
   }
 
-  const setFromText = (payload: Language) => {
+  const setFromText = (payload: string) => {
     dispatch({ type: 'SET_FROM_TEXT', payload })
   }
 
-  const setTranslatedText = (payload: Language) => {
+  const setTranslatedText = (payload: string) => {
     dispatch({ type: 'SET_TRANSLATED_TEXT', payload })
   }
 

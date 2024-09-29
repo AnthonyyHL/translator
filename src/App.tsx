@@ -14,8 +14,6 @@ function App() {
   const {
     fromLanguage,
     toLanguage,
-    fromText,
-    translatedText,
     loading,
     switchLanguages,
     setFromLanguage,
@@ -34,6 +32,7 @@ function App() {
             type={SectionType.From}
             value={fromLanguage}
             onChange={setFromLanguage}
+            setText={setFromText}
           ></LanguageCard>
         </Col>
 
@@ -51,6 +50,8 @@ function App() {
             type={SectionType.To}
             value={toLanguage}
             onChange={setToLanguage}
+            setText={setTranslatedText}
+            loading={loading}
           ></LanguageCard>
         </Col>
       </Row>

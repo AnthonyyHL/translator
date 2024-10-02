@@ -3,17 +3,21 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { LanguageCard } from './components/LanguageCard'
 
 import { useTranslatorReducer } from './hooks/useTranslatorReducer'
+import { handleTranslate } from './services/translateService'
 
-import { AUTO_LANGUAGE } from './constants/languages'
+import { AUTO_LANGUAGE, SUPPORTED_LANGUAGES } from './constants/languages'
 import { SectionType } from './definitions/types.d'
 import { SwitchIcon } from './components/icons/SwitchIcon'
 
 import './App.css'
+import { useEffect } from 'react'
 
 function App() {
   const {
     fromLanguage,
     toLanguage,
+    fromText,
+    translatedText,
     loading,
     switchLanguages,
     setFromLanguage,
@@ -21,6 +25,16 @@ function App() {
     setFromText,
     setTranslatedText,
   } = useTranslatorReducer()
+
+  useEffect(() => {
+    if (fromText === '' || !fromText) return
+    const fromCode: string =
+      fromLanguage === AUTO_LANGUAGE
+        ? 'auto'
+        : SUPPORTED_LANGUAGES[fromLanguage ?? 'es']
+    const toCode: string = SUPPORTED_LANGUAGES[toLanguage ?? 'en']
+    handleTranslate({ fromCode, toCode, text: fromText, setTranslatedText })
+  }, [fromText, fromLanguage, toLanguage])
 
   return (
     <Container className="w-full h-full">
@@ -50,6 +64,7 @@ function App() {
             type={SectionType.To}
             value={toLanguage}
             onChange={setToLanguage}
+            translatedText={translatedText}
             setText={setTranslatedText}
             loading={loading}
           ></LanguageCard>

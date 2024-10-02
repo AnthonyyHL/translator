@@ -17,6 +17,7 @@ import {
 export function LanguageSelector({ type, value, onChange }: Props) {
   const handleChange = (language: string) => {
     if (type === SectionType.From) {
+      console.log('language:', language)
       onChange(language as FromLanguage)
     } else {
       onChange(language as Language)
@@ -26,7 +27,7 @@ export function LanguageSelector({ type, value, onChange }: Props) {
   return (
     <Select onValueChange={handleChange} value={value}>
       <SelectTrigger name="from-language-option-list" className="w-[280px]">
-        <SelectValue placeholder="Select a timezone" />
+        <SelectValue placeholder="Select a language" />
       </SelectTrigger>
       <SelectContent>
         {type === SectionType.From && (

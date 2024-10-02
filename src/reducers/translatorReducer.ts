@@ -36,7 +36,7 @@ export function translatorReducer(
     case 'SET_FROM_TEXT':
       return {
         ...state,
-        loading: true,
+        loading: action.payload === '' ? false : true,
         fromText: action.payload,
         translatedText: '',
       }
